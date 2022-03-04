@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="renderer" content="webkit">
+    <title>登录</title>  
+    <link rel="stylesheet" href="css/pintuer.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/pintuer.js"></script>
+    <script src="http://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <style>
+        button::after{
+            border: none;
+        }
+        button{
+            width:100px;
+            border: none;
+            height: 50px;
+            border-radius: 10px;
+            font-size: 10px;
+            margin: 40px;
+            background-color:white ;
+            color: black;
+
+        }
+        .btns{
+            display: flex;
+             width: 45%;
+           padding-left: 60px;
+
+        }
+        .btnss{
+            display: flex;
+            width: 45%;
+            padding-right: 20px;
+        }
+      .add{
+          width: 55%;
+          border: 1px;solid:gray;
+          border:none;
+      }
+      .add1{
+          width: 50%;
+          border: 1px;solid:gray;
+          border:none;
+
+
+      }
+
+       .apps{
+           width: 100%;
+           height: 300px;
+       }
+        .xiazai1{
+               width: 100%;
+               height: 50px;
+               display: flex;
+               flex-flow: row;
+           }
+        .xiazai2{
+            width: 100%;
+            height: 50px;
+            display: flex;
+            flex-flow: row;
+        }
+        .app12{
+            width: 100%;
+            height: 20px;
+            padding-left: 120px;
+
+
+        }
+        .app123{
+            width: 50%;
+            height: 20px;
+        }
+        .app1234{
+            width: 50%;
+            height: 20px;
+        }
+        .appo{
+            width: 100%;
+            height: 50px;
+            color:#4883F3;
+        }
+        .btns1{
+            width: 100%;
+
+
+        }
+        .btnss1{
+            width: 100%;
+            padding-left: 10px;
+
+        }
+     .xiao{
+         width: 100%;
+     }
+        .xiao1{
+            width: 100%;
+            padding-left: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="container">
+    <div class="line bouncein">
+        <div class="xs6 xm4 xs3-move xm4-move">
+            <div style="height:150px;"></div>
+            <div class="media media-y margin-big-bottom">           
+            </div>
+
+            <div class="panel loginbox" id="xitong">
+                <div class="text-center margin-big1 ">
+                    <div class="btns" id="btns">
+                        <div class="xiao" >
+                        <div class="btns1" id="btns1">
+<!--                        <button class="add" id="admins"style="  text-decoration:underline "onclick="denglu()">账号登录</button>-->
+                            <button class="add" id="admins"onclick="denglu()"><h>账号登录</h></button>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="btnss" >
+                        <div class="xiao1">
+                        <div class="btnss1"id="btnss1">
+                        <button class="add1"id="mains"onclick="saomaCustomer()"><h>协签登录</h></button>
+                        </div>
+
+                    </div>
+                    </div>
+                </div>
+                <div class="panel-body" style="padding:30px; padding-bottom:10px; padding-top:10px;">
+                    <div class="apps" id="appss" style="display: none" >
+                        <h1 style="font-size: 5px">请使用协签助手APP扫码身份认证进行扫码登录!</h1>
+                        <img src="" id="qrcode" alt="" style="width: 280px;padding-left: 60px" />
+
+                    </div>
+                    <div class="apps" id="appsss" style="display: none" >
+                        <h1 style="font-size: 5px">使用浏览器扫描二维码下载，使用微信扫码的，需要复制地址使用浏览器打开!</h1>
+                        <img src="" id="qrcode123" alt="" style="width: 280px;padding-left: 60px" />
+                    </div>
+                    <div class="apps" id="appssss" style="display: none" >
+                        <h1 style="font-size: 5px">使用浏览器扫描二维码下载，使用微信扫码的，需要复制地址使用浏览器打开!</h1>
+                        <img src="" id="qrcode1234" alt="" style="width: 280px;padding-left: 60px" />
+                    </div>
+                <div class="panel-body" id="ppp" style="padding:30px; padding-bottom:30px; padding-top:10px;">
+                    <div class="form-group">
+                        <div class="field field-icon-right">
+                            <input type="text" class="input input-big" name="username" id="username"placeholder="账号" data-validate="required:请填写账号" />
+<!--                            <span class="icon icon-mima margin-small"></span>-->
+                            <span class="icon icon-user margin-small"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="field field-icon-right">
+                            <input type="password" class="input input-big" name="password" id="password"placeholder="密码" data-validate="required:请填写密码" />
+                            <span class="icon icon-lock margin-small"></span>
+                        </div>
+                    </div>
+                  <div class="xiazai1">
+
+                      <div class="app1234" id="app1234">
+                          <input type="button" style="background-color:transparent;outline: none;border: 0;color:#4883F3" onclick="saoma1()" value="雅博APP下载">
+                      </div>
+                      <div class="app123"  id="app123">
+                          <input type="button" style="background-color:transparent;outline: none;border: 0;padding-left:60px;color:#4883F3" onclick="saoma()" value="协签助手下载">
+                      </div>
+
+                  </div>
+
+
+
+
+
+                    <div class="appo"><input type="button" class="button button-block bg-main text-big input-big"  onclick="dengluCustomer()" value="立即登录"></div>
+                    <div class="app12" >
+                        <a href="zhuce.html"><p>注册</p></a></div>
+                </div>
+
+            </div>
+
+            </div>
+            </div>
+
+        </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function dengluCustomer() {
+
+        var username=$("#username").val();
+        var password=$("#password").val();
+        var temp={
+            username:username,
+            password:password
+        }
+
+        $.ajax({
+            type:"post",
+            url:"/login/login",
+            data:JSON.stringify(temp),
+            contentType: 'application/json',
+            dataType:'json',
+            error: function() { alert("用户名或密码错误请检查！");
+                window.location.reload();
+            },
+            success:function(result) {
+                if(result.code==0){
+                     window.location.href="indexs.html?"+$("#username").val()+"";
+
+                }
+                else {
+                    alert("用户名或密码错误请检查");
+                }
+            }
+
+        });
+    }
+    function saoma() {
+        // var url="http://103.79.24.57:8081/login/xqzs.apk";
+        var url="www.byzk.cn/filedownload/450397";//协签助手
+        document.getElementById("appsss").style.display="block"
+        document.getElementById("ppp").style.display="none"
+        document.getElementById("admins").style="none"
+        document.getElementById("mains").style="text-decoration:underline"
+        document.getElementById("admins").style.color='#4883F3';
+        $('.xiao').css('border-bottom','2px solid #4883F3')
+        document.getElementById("mains").style.color='gray';
+        $('.xiao1').css('border-bottom','2px solid gray')
+        $.ajax({
+            type:"post",
+            url:"/login/getApp",
+            // data:JSON.stringify(temp),
+            data:{
+                url:url
+            },
+            // contentType: 'application/json',
+            dataType:'text',
+            error:function(){alert("错误")},
+            success: function(r) {
+                if (r != null) {
+                    //console.log(r);
+                    var path =  r;
+                    //给img的sec赋值。
+                    $("#qrcode123").attr('src', path);
+                }
+            }
+        });
+
+    }
+
+    function saoma1() {
+        // var url="http://103.79.24.57:8081/login/demo.apk";
+        var url="www.byzk.cn/filedownload/450398";//博论app
+        document.getElementById("appssss").style.display="block"
+        document.getElementById("ppp").style.display="none"
+        document.getElementById("appsss").style.display="none"
+        document.getElementById("admins").style="none"
+        document.getElementById("mains").style="text-decoration:underline"
+        document.getElementById("admins").style.color='#4883F3';
+        $('.xiao').css('border-bottom','2px solid #4883F3')
+        document.getElementById("mains").style.color='gray';
+        $('.xiao1').css('border-bottom','2px solid gray')
+        $.ajax({
+            type:"post",
+            url:"/login/getApp",
+            // data:JSON.stringify(temp),
+            data:{
+                url:url
+            },
+            // contentType: 'application/json',
+            dataType:'text',
+            error:function(){alert("错误")},
+            success: function(r) {
+                if (r != null) {
+                    //console.log(r);
+                    var path =  r;
+                    //给img的sec赋值。
+                    $("#qrcode1234").attr('src', path);
+                }
+            }
+        });
+
+    }
+    function saomaCustomer() {
+        document.getElementById("appss").style.display="block"
+        document.getElementById("ppp").style.display="none"
+        document.getElementById("appsss").style.display="none"
+        document.getElementById("appssss").style.display="none"
+        // document.getElementById("xiazai2").style.display="block";
+        document.getElementById("admins").style="none"
+        document.getElementById("mains").style="text-decoration:underline"
+        document.getElementById("admins").style.color='gray';
+        $('.xiao').css('border-bottom','2px solid gray')
+        document.getElementById("mains").style.color='#4883F3';
+        $('.xiao1').css('border-bottom','2px solid #4883F3')
+
+
+
+        var signType=0;
+        // var temp={
+        //     signType:signType
+        // }
+        $.ajax({
+            type:"post",
+            url:"/login/server",
+            // data:JSON.stringify(temp),
+            data:{
+                signType:signType
+            },
+            // contentType: 'application/json',
+            dataType:'text',
+            error:function(){alert("错误")},
+            success: function(r) {
+                if (r != null) {
+                    //console.log(r);
+                    var path =  r;
+                    //给img的sec赋值。
+                    $("#qrcode").attr('src', path);
+                }
+            }
+        });
+
+
+        var timesRun = 0;
+        var interval = window.setInterval(myFunction, 1000 *1);
+        var i = 1;
+        function myFunction() {
+            timesRun += 1;
+            if(timesRun ===60){
+                clearInterval(interval);
+            }
+            var signType=0;
+            console.log("轮训任务=================>" + i++);
+            $.ajax({
+                type:"post",
+                url:"/login/authenticationResult",
+                data:{
+                    signType:signType
+                },
+                async : false,
+                // contentType: 'application/json',
+                dataType:'json',
+                success: function(data) {
+                   console.log(data)
+                    if(data.msg=="success"){
+                        clearInterval(interval);
+                     var flagq=9;
+                        window.location.href="indexs.html?"+data.number+","+data.identifyCard+","+data.mobilePhoneNumber+","+flagq+"";
+
+                    }
+                }
+            });
+        }
+    }
+
+
+    $(function() {
+        $("#mains").click(function() {
+            $("#qrcode").fadeIn("slow");
+        });
+
+        $("#mains").click(function() {
+            $("#ppp").fadeOut("slow");
+        })
+        $("#admins").click(function() {
+            $("#ppp").fadeIn("slow");
+        })
+        $("#admins").click(function() {
+            $("#qrcode").fadeOut("slow");
+
+        })
+        $("#xiazai1").click(function() {
+            $("#qrcode123").fadeIn("slow");
+            $("#qrcode1234").fadeOut("slow");
+
+        })
+        $("#xiazai1").click(function() {
+            $("#qrcode").fadeOut("slow");
+
+        })
+        $("#xiazai1").click(function() {
+            $("#ppp").fadeOut("slow");
+        })
+        $("#xiazai1").click(function() {
+            $("#qrcode1234").fadeIn("slow");
+            $("#qrcode123").fadeOut("slow");
+        })
+
+
+
+    });
+    function denglu() {
+        document.getElementById("appss").style.display="none"
+        document.getElementById("appsss").style.display="none"
+        document.getElementById("appssss").style.display="none"
+        document.getElementById("admins").style="text-decoration:underline"
+        document.getElementById("mains").style="none"
+        document.getElementById("admins").style.color='#4883F3';
+        $('.xiao').css('border-bottom','2px solid #4883F3')
+        document.getElementById("mains").style.color='gray';
+        $('.xiao1').css('border-bottom','2px solid gray')
+
+    }
+
+</script>
+<script type="text/javascript">
+    function myfun() 　　{
+        document.getElementById("admins").style.color='#4883F3';
+        $('.xiao').css('border-bottom','3px solid #4883F3')
+        document.getElementById("mains").style.color='gray';
+        $('.xiao1').css('border-bottom','3px solid gray')
+        // document.getElementById("mains").style.color='#4883F3';
+        // document.getElementById("xiao1").style.borderBottomColor.display="none"
+    }
+    /*用window.onload调用myfun()*/
+
+    // 不要括号
+    window.onload = myfun;
+</script>
+</body>
+</html>

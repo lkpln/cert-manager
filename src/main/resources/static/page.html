@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title></title>
+<link rel="stylesheet" href="css/pintuer.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="js/jquery.js"></script>
+<script src="js/pintuer.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .pop {
+      width: 200px;
+      height: 200px;
+      position: fixed;
+      left: 0px;
+      top: 150px;
+      bottom: 0;
+      right: 0;
+      margin: 0 auto;
+      display: none;
+      animation: pop 1s ease-in-out 0s;
+      z-index: 500000;
+    }
+    @keyframes pop {
+      from {
+        height: 0;
+      }
+      to {
+        height: 500px;
+      }
+    }
+    .down {
+      width: 400px;
+      height: 0;
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      display: block;
+      animation: out 1s ease-in-out;
+    }
+    @keyframes out {
+      from {
+        height: 300px;
+      }
+      to {
+        height: 0;
+      }
+    }
+
+    .img4 {
+      width: 200px;
+      height: 200px;
+      vertical-align: top;
+      z-index: 10000;
+    }
+
+
+  </style>
+</head>
+<body>
+<div class="panel admin-panel">
+  <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 编辑内容</strong></div>
+
+  <div class="pop" id="pop3">
+    <img src="" id="qrcodess4"alt="" class="img4">
+      <h3 id="opt" style="color: black">扫码签名后自动发表评论</h3>
+
+  </div>
+
+  <div class="body-content">
+    <div class="form-x" >
+<!--      <div class="form-group">-->
+<!--        <div class="label">-->
+<!--          <label>标题：</label>-->
+<!--        </div>-->
+<!--        <div class="field">-->
+<!--          <input type="text" class="input" name="articleTop"id="articleTop" value="" />-->
+<!--          <div class="tips"></div>-->
+<!--        </div>-->
+<!--      </div>-->
+      <div class="form-group">
+        <div class="label">
+          <label>内容：</label>
+        </div>
+        <div class="field">
+          <textarea name="article" id="articles" style="width:100%; resize: none;"rows="8" ></textarea>
+          <textarea name="hide" name="articleSign" id="articleSign"style="display:none;"></textarea>
+<!--          <textarea  style="width:50%;resize: none; "rows="8" name="articleSign" id="articleSign"placeholder="签名结果" disabled="disabled"></textarea>-->
+        </div>
+      </div>
+<!--      <div class="form-group">-->
+<!--        <div class="field">-->
+<!--          <input type="button" class="button bg-blue margin-left" id="image1" onclick="saomaCustomer()"value="+ 扫码签名"  style="float:left;">-->
+<!--&lt;!&ndash;          <img src="" id="qrcodess4" alt="" style="width: 200px"/>&ndash;&gt;-->
+<!--        </div>-->
+<!--      </div>-->
+      <div class="form-group">
+        <div class="label">
+          <label></label>
+        </div>
+        <div class="field">
+          <input type="button" class="button bg-blue "  onclick="saomaCustomer()"value="发表">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function saomaCustomer() {
+      var  username=window.sessionStorage.getItem("arr");
+    var articlesflag=document.getElementById('articles').value;
+
+     if(typeof articlesflag == "undefined" || articlesflag == null || articlesflag == ""){
+      alert("文章内容为空，请填写！")
+      return false;
+    }
+
+   tu();
+    var strSrcData= document.getElementById('articles').value;
+    var signType=1;
+    $.ajax({
+      type:"post",
+      url:"/login/server",
+      data:{
+        signType:signType,
+        strSrcData:strSrcData
+      },
+      // contentType: 'application/json',
+      dataType:'text',
+      success: function(r) {
+        if (r != null) {
+          //console.log(r);
+          var path =  r;
+          //给img的sec赋值。
+            $("#qrcodess4").attr('src', path);
+        }
+      }
+    });
+    //每1秒执行一次myFunction()方法
+    var timesRun = 0;
+    var interval = window.setInterval(myFunction, 1000 *1);
+    var i = 1;
+    function myFunction() {
+      timesRun += 1;
+      if(timesRun ===60){
+        clearInterval(interval);
+      }
+      var signType=1;
+      console.log("轮训任务=================>" + i++);
+      $.ajax({
+        type:"post",
+        url:"/login/authenticationResult",
+        data:{
+          signType:signType
+        },
+        async : false,
+        dataType:'json',
+        success: function(data) {
+
+          if(data.msg=="success"){
+            clearInterval(interval);
+            $("#qrcodess4").fadeOut("slow");
+              $("#opt").fadeOut("slow");
+              if(data.certsnResult!=null){
+                  $("#articleSign").html(data.certsnResult)
+              }
+            alert("签名成功")
+              // var articleSign= document.getElementById('articleSign').value;
+              //
+              // if(typeof articleSign == "undefined" || articleSign == null || articleSign == ""){
+              //     alert("请先扫码签名")
+              //     return false;
+              // }
+              var article= document.getElementById('articles').value;
+              var articleSign= document.getElementById('articleSign').value
+
+              console.log(username)
+              console.log(article)
+              console.log(articleSign)
+              var temp = {
+                  articleSign:articleSign,
+                  article:article,
+                  username:username
+              }
+              $.ajax({
+                  type:"post",
+                  url:"/login/article",
+                  data: JSON.stringify(temp),
+                  contentType: 'application/json',
+                  async: false,
+                  dataType: 'json',
+                  success: function(r) {
+                      if (r != null) {
+                          window.location.href="adv.html";
+                      }
+                  }
+              });
+
+          }
+
+          // if(data.certsnResult!=null){
+          // var  articleSign= data.certsnResult;
+          // console.log(articleSign);
+          //   var temp={
+          //     articleSign:articleSign,
+          //   }
+          //   $.ajax({
+          //     type:"post",
+          //     url:"/login/updateArticle",
+          //     data:JSON.stringify(temp),
+          //     contentType: 'application/json',
+          //     async : false,
+          //     dataType:'json',
+          //     success: function(data) {
+          //       if (data!=null){
+          //         $.ajax({
+          //           type:"post",
+          //           url:"/login/getArticle",
+          //           contentType: 'application/json',
+          //           dataType:'json',
+          //           error: function() { alert("查询错误"); },
+          //           success:function(data) {
+          //             if(null != data && "" != data){
+          //               for(i in data.data)
+          //               {
+          //                 if (flag=="main1"){
+          //                   if(data.data[1].status=="1"){
+          //                     document.getElementById("qwer").style.display="block"
+          //                     $("#applk").fadeIn("slow");
+          //                     $("#main1").fadeOut("slow");
+          //
+          //                     $("#sing5").html(data.data[1].articleSign);
+          //                   }
+          //                 }
+          //
+          //                 if (flag=="main2"){
+          //                   console.log(data)
+          //                   if(data.data[0].status=="1"){
+          //                     document.getElementById("qwer2").style.display="block"
+          //                     $("#applk1").fadeIn("slow");
+          //                     $("#main2").fadeOut("slow");
+          //                     $("#sing3").html(data.data[0].articleSign);
+          //                   }
+          //                 }
+          //                 if (flag=="main3"){
+          //                   console.log(data)
+          //                   if(data.data[2].status=="1"){
+          //                     document.getElementById("qwer3").style.display="block"
+          //                     $("#applk2").fadeIn("slow");
+          //                     $("#main3").fadeOut("slow");
+          //                     $("#sing18").html(data.data[2].articleSign);
+          //                   }
+          //                 }
+          //                 if (flag=="main4"){
+          //                   console.log(data)
+          //                   if(data.data[3].status=="1"){
+          //                     document.getElementById("qwer4").style.display="block"
+          //                     $("#applk3").fadeIn("slow");
+          //                     $("#main4").fadeOut("slow");
+          //                     $("#sing184").html(data.data[3].articleSign);
+          //                   }
+          //                 }
+          //                 // if(data.data[1].status=="1"){
+          //                 //     document.getElementById("qwer").style.display="block"
+          //                 //     $("#sing5").html(data.data[1].articleSign);
+          //                 // }
+          //
+          //
+          //               }
+          //             }
+          //           }
+          //
+          //         });
+          //       }
+          //
+          //     }
+          //   });
+          // }
+        }
+
+      });
+
+
+
+    }
+  }
+</script>
+  <script>
+    function tu(){
+
+        timer = window.setInterval(imgBlock, 1000);
+        function imgBlock() {
+          var pop = document.getElementById('pop3');
+          pop.style.display = 'block';
+          timer2 = window.setInterval(imgNone,70000);
+        }
+        function imgNone() {
+          var pop = document.getElementById('pop3');
+          pop.className = 'down';
+          clearInterval(timer);
+          clearInterval(timer2);
+        }
+    }
+
+
+    // function  getStatus() {
+    //   var  username=window.sessionStorage.getItem("arr");
+    //   var temp = {
+    //     username:username
+    //   }
+    //   $.ajax({
+    //     type:"post",
+    //     url:"/login/getStatus",
+    //     data: JSON.stringify(temp),
+    //     contentType: 'application/json',
+    //     async: false,
+    //     dataType: 'json',
+    //     success: function(r) {
+    //       console.log(r)
+    //       if (r.data ==0) {
+    //         alert("请先扫码签名")
+    //          return false;
+    //       }
+    //       else if (r==1){
+    //         return  true;
+    //       }
+    //     }
+    //   })
+    // }
+
+  </script>
+</body></html>

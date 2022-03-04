@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title></title>
+<link rel="stylesheet" href="css/pintuer.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="js/jquery.js"></script>
+    <script src="js/vue.js"></script>
+<script src="js/pintuer.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .pop {
+            width: 200px;
+            height: 200px;
+            position: fixed;
+            left: 0px;
+            top: 150px;
+            bottom: 0;
+            right: 0;
+            margin: 0 auto;
+            display: none;
+            animation: pop 1s ease-in-out 0s;
+            z-index: 500000;
+        }
+        @keyframes pop {
+            from {
+                height: 0;
+            }
+            to {
+                height: 500px;
+            }
+        }
+        .down {
+            width: 400px;
+            height: 0;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            display: block;
+            animation: out 1s ease-in-out;
+        }
+        @keyframes out {
+            from {
+                height: 300px;
+            }
+            to {
+                height: 0;
+            }
+        }
+        .img1 {
+            width: 200px;
+            height: 200px;
+            vertical-align: top;
+            z-index: 10000;
+        }
+        .img2 {
+            width: 200px;
+            height: 200px;
+            vertical-align: top;
+            z-index: 10000;
+        }
+        .img3 {
+            width: 200px;
+            height: 200px;
+            vertical-align: top;
+            z-index: 10000;
+        }
+        .img4 {
+            width: 200px;
+            height: 200px;
+            vertical-align: top;
+            z-index: 10000;
+        }
+        .touxiang{
+            width:20%;
+            padding-left: 200px;
+        }
+        .touxiang img{
+            width: 50px;
+            height: 50px;
+        }
+      .banner{
+          display: flex;
+          flex-flow: row;
+      }
+        .artice{
+           width: 100%;
+            display: flex;
+            flex-flow: row;
+            padding-left: 40px;
+            margin-top: 18px;
+        }
+        .btn{
+          padding-left: 970px;
+            display: flex;
+            flex-flow: row;
+            height: 25px;
+        }
+        .btnapp{
+            padding-left: 970px;
+            display: flex;
+            flex-flow: row;
+            height: 25px;
+        }
+        .hezi{
+            border-bottom: 1px solid gray;
+        }
+        .articetop{
+            display: flex;
+            flex-flow: row;
+            width: 100%;
+            padding-left:10px;
+            margin-top: 15px;
+            height: 100px;
+        }
+        .add1{
+            background-color: #4883F3;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding-left: 3px;
+            padding-right: 3px;
+
+        }
+        .add2{
+            background-color: #4883F3;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding-left: 3px;
+            padding-right: 3px;
+        }
+        .yanqian{
+            display: flex;
+            flex-flow: row;
+            padding-left: 1022px;
+        }
+        .yanqian1{
+            display: flex;
+            flex-flow: row;
+            padding-left: 20px;
+        }
+        .titles{
+            width: 100%;
+
+        }
+        .titleitem{
+            display: flex;
+            /*align-items: center;*/
+            width: 100%;
+            flex-flow: row;
+            padding-left: 34px;
+            margin-top: 14px;
+            color: black;
+        }
+    </style>
+
+</head>
+<body>
+<div class="panel admin-panel" id="app">
+  <div class="panel-head"> 广场展示</div>
+    <div class="titles" v-for="(item,id) in testData" :key="id">
+        <div class="titleitem">
+<!--          作者：<textarea style="margin-bottom: 1px;padding-left:20px " id="title2" disabled="disabled">-->
+<!--                 {{item.username}}-->
+
+<!--        </textarea>-->
+            作者：<h1 style="margin-bottom: 1px;padding-left:20px ">
+                 {{item.username}}
+        </h1>
+        </textarea>
+            <div class="yanqian">
+                <button  class="add1"id="" @click="checkSign(item)">查看签名</button>
+
+            </div>
+            <div class="yanqian1">
+                <button class="add2" @click="verifySign(item)">验证签名</button>
+            </div>
+        </div>
+        <div class="artice" style="width: 100%;height: 100px;">
+            <textarea v-if="item.status === 1" style="width:100%;resize: none; "rows="8" name="sing2" id="wen"placeholder="文章"disabled="false">{{item.article}}</textarea>
+            <textarea v-else style="width:100%;resize: none; "rows="8" name="sing2" id="sing"placeholder="签名值"disabled="false">{{item.articleSign}}</textarea>
+            <textarea class="hide" style="display: none" id="id">{{item.id}}</textarea>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    new Vue({
+        el: "#app",
+        data: {
+            testData: []
+        },
+        created(){
+            this.$nextTick(() =>{
+                this.getUllistData()
+            })
+        },
+        methods:{
+            //获取渲染数据
+            getUllistData(){
+                $.ajax({
+                    type:"post",
+                    url:"/login/getArticle",
+                    contentType: 'application/json',
+                    dataType:'json',
+                    error: function() { alert("查询错误"); },
+                    success : ((data) => {
+                            if(data.code === 0){
+                                this.$set(this,'testData',data.data)
+                            }else{
+                                alert("请求失败~")
+                            }
+                    })
+                });
+            },
+            checkSign(item){
+
+
+                item.status === 1?item.status =2 :item.status = 1
+            },
+            verifySign(item){
+                let temp = {
+                    sourceData:item.article,
+                    signData:item.articleSign
+                }
+                $.ajax({
+                    type: "post",
+                    url: "/login/verifySign",
+                    data: JSON.stringify(temp),
+                    contentType: 'application/json',
+                    async: false,
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data)
+                        if (data.code==0) {
+                            alert("验证签名成功"+data.data)
+                            // window.location.reload();
+
+                        }
+                        else{
+                            alert(data.data)
+                        }
+                    }
+                });
+            }
+
+        }
+    })
+    // function verifySign() {
+    //     var article=document.getElementById("wen").value;
+    //     var articleSign=document.getElementById("sing").value;
+    //     console.log(article)
+    //     console.log(articleSign)
+    //
+    //
+    // }
+    // function checkSign(item) {
+    //     console.log(item,11111)
+    //     // var ID = obj.getAttribute("id");
+    //     // alert(ID)
+    //     // $("#wen").fadeOut("slow");
+    //     // $("#sing").fadeIn("slow");
+    //
+    //     // document.getElementById("sing").style.display="none"
+    // }
+</script>
+</body></html>

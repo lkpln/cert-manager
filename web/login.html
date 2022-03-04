@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <link rel="stylesheet" href="./bootstrap.min.css">
+   <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+   <div class="container">
+      <!-- 纳税人 -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">协同签名客户端（纳税人版）</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <img class="ewmImg" alt="" src="./nsr.jpg">
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- 税务人员 -->
+      <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">协同签名客户端（税务人员版）</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <img class="ewmImg" alt="" src="./swry.jpg">
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- app -->
+      <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">第三方应用App</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <img class="ewmImg" alt="" src="./app.jpg">
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="nav_header">
+         <div class="nav_header_item nav_header_item_active">纳税人</div>
+         <div class="nav_header_item">税务人员</div>
+      </div>
+      <div class="content"></div>
+   </div>
+   <script src="./jquery-3.3.1.min.js"></script>
+   <script src="./bootstrap.min.js"></script>
+   <script>
+      !function () {
+         //纳税人
+         let getNSRContent = () => {
+            return `
+               <ul>
+                  <li onclick="window.open('http://103.79.24.57:8081/register/')"><span class="number">1</span>纳税人注册（北京）</li>
+                  <li onclick="window.open('http://103.79.24.59:8081/register/')"><span class="number">2</span>纳税人注册（河北）</li>
+                  <li data-toggle="modal" data-target="#exampleModal"><span class="number">3</span>下载协同签名客户端</li>
+                  <li onclick="window.open('http://103.79.24.57:8081/MobileDemo/index.html')"><span class="number">4</span>扫码演示</li>
+                  <li data-toggle="modal" data-target="#exampleModal2"><span class="number">5</span>下载第三方应用App</li>
+               </ul>
+            `
+         }
+
+         //税务人员
+         let getSWRYContent = () => {
+            return `
+               <ul>
+                  <li onclick="window.open('http://222.128.104.189:9999')"><span class="number">1</span>税务人员注册（总局）</li>
+                  <li onclick="window.open('http://103.79.24.57:9999')"><span class="number">2</span>税务人员注册（省局）</li>
+                  <li data-toggle="modal" data-target="#exampleModal1"><span class="number">3</span>下载协同签名客户端</li>
+               </ul>
+            `
+         }
+
+         let global = 1;
+         let titleDOM = document.getElementsByClassName('nav_header_item');
+         let contentDom = document.getElementsByClassName('content')[0];
+         contentDom.innerHTML = getNSRContent();
+         for (let i = 0; i < titleDOM.length; i++) {
+            titleDOM[i].onclick = function (event) {
+               if (i == 0) {
+                  titleDOM[0].className = "nav_header_item nav_header_item_active";
+                  titleDOM[1].className = "nav_header_item";
+                  contentDom.innerHTML = getNSRContent();
+               } else if (i == 1) {
+                  titleDOM[1].className = "nav_header_item nav_header_item_active";
+                  titleDOM[0].className = "nav_header_item";
+                  contentDom.innerHTML = getSWRYContent();
+               }
+            }
+         }
+      }()
+   </script>
+</body>
+
+</html>

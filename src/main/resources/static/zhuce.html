@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="renderer" content="webkit">
+	<title>登录</title>
+	<link rel="stylesheet" href="css/pintuer.css">
+	<link rel="stylesheet" href="css/admin.css">
+	<script src="js/jquery.js"></script>
+	<script src="js/pintuer.js"></script>
+	<style>
+
+		button{
+			background:#fff;
+
+
+		}
+
+		button.active{
+			background:#dccab8;
+		}
+     .xieqian{
+		 display: flex;
+
+	 }
+		.flags{
+
+			display: flex;
+			flex-flow: row;
+			padding-left: 100px;
+		}
+	</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="container">
+	<div class="line bouncein">
+		<div class="xs6 xm4 xs3-move xm4-move">
+			<div style="height:25px;"></div>
+			<div class="media media-y margin-big-bottom">
+			</div>
+			<div class="panel loginbox">
+				<div class="text-center margin-big padding-big-top"><h6>用户注册</h6></div>
+				<div class="panel-body" style="padding:30px; padding-bottom:10px; padding-top:10px;">
+					<div class="form-group">
+						<div class="field field-icon-right">
+							<input type="text" class="input input-big" name="username" id="username"placeholder="账户" data-validate="required:请填写账户" />
+							<span class="icon icon-user margin-small"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="field field-icon-right">
+							<input type="password" class="input input-big" name="password" id="password"placeholder="六位数字密码" data-validate="required:请填写密码" />
+							<div class="yanjing"id="po">
+							<span class="icon icon-eye  margin-small" ></span>
+							</div>
+<!--							<span class="icon icon-lock margin-small"></span>-->
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="field field-icon-right">
+							<input type="text" class="input input-big" name="mobilePhoneNumber" id="mobilePhoneNumber"placeholder="手机号" data-validate="required:请填写手机号" />
+							<span class="icon icon-phone margin-small"></span>
+						</div>
+					</div>
+					<div class="form-group">
+					<div class="field field-icon-right">
+						<input type="text" class="input input-big" name="identifyCard" id="identifyCard"placeholder="身份证号" data-validate="required:可选身份证号" />
+						<span class="icon icon-key margin-small"></span>
+					</div>
+				</div>
+<!--					<div class="form-group">-->
+<!--						<div class="field field-icon-right">-->
+<!--							<input type="text" class="input input-big" name="email" id="email"placeholder="电子邮件账号" data-validate="required:可选电子邮件账号" />-->
+<!--							<span class="icon icon-mail-forward margin-small"></span>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--					<div class="form-group">-->
+<!--						<div class="field field-icon-right">-->
+<!--							<input type="text" class="input input-big" name="unitCode" id="unitCode"placeholder="应用识别码" data-validate="required:请填写应用识别码" />-->
+<!--							<span class="icon icon-spoon margin-small"></span>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--					<div class="form-group">-->
+<!--						<div class="field field-icon-right">-->
+<!--							<input type="text" class="input input-big" name="unitName" id="unitName"placeholder="应用名称" data-validate="required:请填写应用名称" />-->
+<!--							<span class="icon icon-cube margin-small"></span>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--					<div class="form-group">-->
+<!--						<div class="field field-icon-right">-->
+<!--							<input type="text" class="input input-big" name="taxServiceCode" id="taxServiceCode"placeholder="涉税机构代码" data-validate="required:可选涉税机构代码" />-->
+<!--							<span class="icon icon-key margin-small"></span>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--					<div class="form-group">-->
+<!--						<div class="field field-icon-right">-->
+<!--							<input type="text" class="input input-big" name="taxServiceName" id="taxServiceName"placeholder="涉税机构代码名称" data-validate="required:可选涉税机构代码名称" />-->
+<!--							<span class="icon icon-key margin-small"></span>-->
+<!--						</div>-->
+<!--					</div>-->
+				</div>
+				<div class="xieqian">
+				<a href="index.html"><p style="padding-left: 40px">返回上级页面</p></a>
+<!--					<div class="flags" style="padding-left: 180px">-->
+<!--						<button class="flagss" id="po" value="0" style="">开通协签</button>-->
+<!--					</div>-->
+				</div>
+				<div style="padding:15px;"><input type="button" class="button button-block bg-main text-big input-big"onclick="zhuceCustomer()" value="点击注册"></div>
+				<!--                <input value="登录" lay-submit lay-filter="login" style="width:100%;" onclick="dengluCustomer()" type="button">-->
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+
+	function zhuceCustomer() {
+		var flags = validateForm();
+		if (flags == false) {
+			return;
+		}
+		var username=$("#username").val();
+		var mobilePhoneNumber=$("#mobilePhoneNumber").val();
+		var identifyCard=$("#identifyCard").val();
+		var unitCode="00000000000";
+		var unitName="协同签名";
+		// var taxServiceCode=$("#taxServiceCode").val();
+		// var taxServiceName=$("#taxServiceName").val();
+		var flag ="1";
+		// if (flag1 == 1) {
+		// flag=1
+		// }
+		// else  {
+		// 	flag=0;
+		// }
+
+		var password=$("#password").val();
+		console.log(password)
+		var temp={
+			username:username,
+			mobilePhoneNumber:mobilePhoneNumber,
+			identifyCard:identifyCard,
+			password:password,
+			unitCode:unitCode,
+			unitName:unitName,
+			// taxServiceCode:taxServiceCode,
+			// taxServiceName:taxServiceName,
+			flag:flag
+
+		}
+
+		$.ajax({
+			type:"post",
+			url:"/login/userRegister",
+			data:JSON.stringify(temp),
+			contentType: 'application/json',
+			dataType:'json',
+			error: function() { alert("注册信息不符合规范请逐一检查！"); },
+			success:function(data) {
+
+				if(null != data && "" != data){
+					alert(data.data)
+					window.location.href="index.html";
+					// setTimeout("javascript:location.href='index.html'", 2000);
+				}
+			}
+
+		});
+	}
+	function validateForm()
+	{
+
+
+		var username=document.getElementById("username");
+		if (username.value==null || username.value=="")
+		{
+			alert("用户名为空请重新输入！");
+			return false;
+		}
+		var username=$("#username").val();
+		console.log(username)
+		var reg = new RegExp(/^[\u4E00-\u9FA5]{1,4}$/);
+		if(reg.test(username)==false) {
+			alert("账户最长为4位汉字！");
+			return false;
+		}
+		var password=document.getElementById("password");
+		console.log(password)
+		if (password.value==null ||password.value=="")
+		{
+			alert("密码为空请重新输入！");
+			return false;
+		}
+		var password=document.getElementById("password");
+		console.log(password)
+		if(isNaN(password.value)&&password.value!=0){
+
+			alert("请输入数字")
+			return false;
+		}
+		// var password=document.getElementById("password");
+		var password=$("#password").val();
+		console.log(password)
+		var reg = new RegExp(/^\d{6}$/);
+		if(reg.test(password)==false) {
+			alert("密码必须为6位数字！");
+			return false;
+		}
+
+		var mobilePhoneNumber=document.getElementById("mobilePhoneNumber");
+		if (mobilePhoneNumber.value==null || mobilePhoneNumber.value=="")
+		{
+			alert("手机号为空请重新输入！");
+			return false;
+		}
+		var mobilePhoneNumber=$("#mobilePhoneNumber").val();
+		console.log(mobilePhoneNumber)
+		var reg = new RegExp(/^\d{11}$/);
+		if(reg.test(mobilePhoneNumber)==false) {
+			alert("手机号必须为11位数字！");
+			return false;
+		}
+		var identifyCard=$("#identifyCard").val();
+		console.log(identifyCard)
+		var reg = new RegExp(/^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/);
+		if(reg.test(identifyCard)==false) {
+			alert("身份证格式错误！");
+			return false;
+		}
+
+	}
+	//如果用jquery，会很方便实现
+	var password=document.getElementById("password");
+		$('#po').click(function () {//给id为btn的元素添加点击事件
+			if(password.type==='password')
+						{
+
+							password.setAttribute('type','text');
+						}else{
+
+							password.setAttribute('type','password');
+
+						}
+
+		})
+
+	// var password=$("#password").val();
+	// var anniu=$('#yanjing').val();
+	// anniu.addEventListener('click',function(){
+	// 	if(password.type==='password')
+	// 	{
+	// 		console.log(aaaa)
+	// 		password.setAttribute('type','text');
+	// 		anniu.classList.add('yanjing');
+	// 	}else{
+	// 		password.setAttribute('type','password');
+	// 		anniu.classList.remove('yincangs');
+	// 	}
+	// })
+
+</script>
+</body>
+</html>

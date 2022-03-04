@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="renderer" content="webkit">
+    <title></title>
+    <link rel="stylesheet" href="css/pintuer.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/pintuer.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .pop {
+            width: 200px;
+            height: 200px;
+            position: fixed;
+            left: 0px;
+            top: 150px;
+            bottom: 0;
+            right: 0;
+            margin: 0 auto;
+            display: none;
+            animation: pop 1s ease-in-out 0s;
+            z-index: 500000;
+        }
+        @keyframes pop {
+            from {
+                height: 0;
+            }
+            to {
+                height: 500px;
+            }
+        }
+        .down {
+            width: 400px;
+            height: 0;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            display: block;
+            animation: out 1s ease-in-out;
+        }
+        @keyframes out {
+            from {
+                height: 300px;
+            }
+            to {
+                height: 0;
+            }
+        }
+        .img1 {
+            width: 200px;
+            height: 200px;
+            vertical-align: top;
+            z-index: 10000;
+        }
+        .img2 {
+            width: 200px;
+            height: 200px;
+            vertical-align: top;
+            z-index: 10000;
+        }
+        .img3 {
+            width: 200px;
+            height: 200px;
+            vertical-align: top;
+            z-index: 10000;
+        }
+        .img4 {
+            width: 200px;
+            height: 200px;
+            vertical-align: top;
+            z-index: 10000;
+        }
+        .touxiang{
+            width:20%;
+            padding-left: 200px;
+        }
+        .touxiang img{
+            width: 50px;
+            height: 50px;
+        }
+        .banner{
+            display: flex;
+            flex-flow: row;
+        }
+        .artice{
+            width: 100%;
+            display: flex;
+            flex-flow: row;
+            padding-left: 40px;
+        }
+        .btn{
+            padding-left: 970px;
+            display: flex;
+            flex-flow: row;
+            height: 25px;
+        }
+        .btnapp{
+            padding-left: 970px;
+            display: flex;
+            flex-flow: row;
+            height: 25px;
+        }
+        .hezi{
+            border-bottom: 1px solid gray;
+        }
+        .articetop{
+            display: flex;
+            flex-flow: row;
+            width: 100%;
+            padding-left:10px;
+            margin-top: 15px;
+        }
+        .add1{
+            background-color:#4883F3 ;
+            color: white;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="panel admin-panel">
+    <div class="panel-head"> 文章展示</div>
+    <div class="titles">
+        <div class="pop" id="pop">
+            <img src="" id="qrcodes"alt="" class="img1">
+        </div>
+        <div class="pop" id="pop1">
+
+            <img src="" id="qrcodess"alt="" class="img2">
+        </div>
+        <div class="pop" id="pop2">
+
+            <img src="" id="qrcodess3"alt="" class="img3">
+        </div>
+        <div class="pop" id="pop3">
+
+            <img src="" id="qrcodess4"alt="" class="img4">
+        </div>
+        <textarea class="hide" style="display: none" id="ip"></textarea>
+        <div class="articetop">
+            文章标题：  <textarea style="margin-bottom: 15px;resize: none; "rows="1" id="title1" disabled="disabled"></textarea>
+            <div class="btn" id="qwes">
+                <button class="add1"id="main1"  onclick="saomaCustomer(id)">扫码签名</button>
+                <!--                                <img src="" id="qrcodes" alt="" style="width: 200px"/>-->
+            </div>
+            <div class="btnapp" id="applk">
+                <button class="add1"id="mains">已签名</button>
+                <button class="add1"id="main1"onclick="deleteCustomer(id)">重置签名</button>
+            </div>
+        </div>
+        <div class="hezi" id="qwe">
+            <div class="banner">
+                <div class="artice" >
+                    <textarea  style="width:100%; resize: none;"rows="8" id="sing1"placeholder="文章" disabled="disabled"></textarea>
+                </div>
+                <!--            <img src="" id="qrcodes" alt="" style="width: 200px"/>-->
+                <!--          <div class="btn" id="qwes">-->
+                <!--              <button class="add1"id="main1"  onclick="saomaCustomer(id)">扫码签名</button>-->
+                <!--              <img src="" id="qrcodes" alt="" style="width: 200px"/>-->
+                <!--          </div>-->
+            </div>
+        </div>
+        <div class="hezi" id="qwer" style="display: none">
+            <div class="banner">
+                <div class="artice">
+                    <textarea  style="width:50%;resize: none; "rows="8" name="sing4" id="sing4"placeholder="文章" disabled="disabled"></textarea>
+                    <textarea  style="width:50%;resize: none; "rows="8" name="sing5" id="sing5"placeholder="签名结果" disabled="disabled"></textarea>
+                </div>
+
+                <textarea class="hide" style="display: none" id="sing"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="titles">
+        <textarea class="hide" style="display: none" id="ips"></textarea>
+        <div class="articetop">
+            文章标题：  <textarea style="margin-bottom: 15px;resize: none; "rows="1" id="title2" disabled="disabled"></textarea>
+            <div class="btn" id="qwes2">
+                <button class="add1"id="main2"  onclick="saomaCustomer(id)">扫码签名</button>
+
+            </div>
+            <div class="btnapp" id="applk1">
+                <button class="add1"id="mains">已签名</button>
+                <button class="add1"id="main2"onclick="deleteCustomer(id)">重置签名</button>
+            </div>
+        </div>
+        <div class="hezi" id="qwe2">
+            <div class="banner">
+                <div class="artice" >
+                    <textarea  style="width:100%; resize: none;"rows="8" id="sing2"placeholder="文章" disabled="disabled"></textarea>
+                </div>
+                <!--                <img src="" id="qrcodess" alt="" style="width: 200px"/>-->
+
+            </div>
+        </div>
+        <div class="hezi" id="qwer2" style="display: none">
+            <div class="banner">
+                <div class="artice">
+                    <textarea  style="width:50%;resize: none; "rows="8" name="sing2" id="sing6"placeholder="文章" disabled="disabled"></textarea>
+                    <textarea  style="width:50%;resize: none; "rows="8" name="sing3" id="sing3"placeholder="签名结果" disabled="disabled"></textarea>
+                </div>
+                <textarea class="hide" style="display: none" id="sings"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="titles">
+        <textarea class="hide" style="display: none" id="ips3"></textarea>
+        <div class="articetop">
+            文章标题：  <textarea style="margin-bottom: 15px;resize: none; "rows="1" id="title3" disabled="disabled"></textarea>
+            <div class="btn" id="qwes3">
+                <button class="add1"id="main3"  onclick="saomaCustomer(id)">扫码签名</button>
+                <!--                <img src="" id="qrcodess3" alt="" style="width: 200px"/>-->
+            </div>
+            <div class="btnapp" id="applk2">
+                <button class="add1"id="mains">已签名</button>
+                <button class="add1"id="main3"onclick="deleteCustomer(id)">重置签名</button>
+            </div>
+        </div>
+        <div class="hezi" id="qwe3">
+            <div class="banner">
+                <div class="artice" >
+                    <textarea  style="width:100%; resize: none;"rows="8" id="sing33"placeholder="文章" disabled="disabled"></textarea>
+                </div>
+                <!--                <img src="" id="qrcodess3" alt="" style="width: 200px"/>-->
+            </div>
+        </div>
+        <div class="hezi" id="qwer3" style="display: none">
+            <div class="banner">
+                <div class="artice">
+                    <textarea  style="width:50%;resize: none; "rows="8" name="sing2" id="sing9"placeholder="文章" disabled="disabled"></textarea>
+                    <textarea  style="width:50%;resize: none; "rows="8" name="sing3" id="sing18"placeholder="签名结果" disabled="disabled"></textarea>
+                </div>
+                <!--                <div class="btn">-->
+                <!--                    <button class="add1"id="mains">已签名</button>-->
+                <!--                </div>-->
+                <textarea class="hide" style="display: none" id="sings3"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="titles">
+        <textarea class="hide" style="display: none" id="ips4"></textarea>
+        <div class="articetop">
+            文章标题：  <textarea style="margin-bottom: 15px;resize: none; "rows="1" id="title4" disabled="disabled"></textarea>
+            <div class="btn" id="qwes4">
+                <button class="add1"id="main4"  onclick="saomaCustomer(id)">扫码签名</button>
+                <!--                <img src="" id="qrcodess4" alt="" style="width: 200px"/>-->
+            </div>
+            <div class="btnapp" id="applk3">
+                <button class="add1"id="mains">已签名</button>
+                <button class="add1"id="main4"onclick="deleteCustomer(id)">重置签名</button>
+            </div>
+        </div>
+        <div class="hezi" id="qwe4">
+            <div class="banner">
+                <div class="artice" >
+                    <textarea  style="width:100%; resize: none;"rows="8" id="sing34"placeholder="文章" disabled="disabled"></textarea>
+                </div>
+                <!--                <img src="" id="qrcodess4" alt="" style="width: 200px"/>-->
+            </div>
+        </div>
+        <div class="hezi" id="qwer4" style="display: none">
+            <div class="banner">
+                <div class="artice">
+                    <textarea  style="width:50%;resize: none; "rows="8" name="sing2" id="sing94"placeholder="文章" disabled="disabled"></textarea>
+                    <textarea  style="width:50%;resize: none; "rows="8" name="sing3" id="sing184"placeholder="签名结果" disabled="disabled"></textarea>
+                </div>
+                <!--                <div class="btn">-->
+                <!--                    <button class="add1"id="mains">已签名</button>-->
+                <!--                </div>-->
+                <textarea class="hide" style="display: none" id="sings4"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $.ajax({
+        type:"post",
+        url:"/login/getArticle",
+        contentType: 'application/json',
+        dataType:'json',
+        error: function() { alert("查询错误"); },
+        success:function(data) {
+            if(null != data && "" != data){
+                for(i in data.data)
+                {
+                    $("#sing1").html(data.data[1].article);
+                    $("#ip").html(data.data[1].id);
+                    $("#sing4").html(data.data[1].article);
+                    $("#sing5").html(data.data[1].articleSign);
+                    $("#title1").html(data.data[1].articleTop);
+                    $("#sing2").html(data.data[0].article);
+                    $("#sing6").html(data.data[0].article);
+                    $("#ips").html(data.data[0].id);
+                    $("#title2").html(data.data[0].articleTop);
+                    $("#sing3").html(data.data[0].articleSign);
+                    $("#ips3").html(data.data[2].id);
+                    $("#sing33").html(data.data[2].article);
+                    $("#sing9").html(data.data[2].article);
+                    $("#sing18").html(data.data[2].articleSign);
+                    $("#title3").html(data.data[2].articleTop);
+
+                    $("#ips4").html(data.data[3].id);
+                    $("#sing34").html(data.data[3].article);
+                    $("#sing94").html(data.data[3].article);
+                    $("#sing184").html(data.data[3].articleSign);
+                    $("#title4").html(data.data[3].articleTop);
+                    if(data.data[1].status=="1"){
+                        $("#qwe").fadeOut("slow");
+                        $("#main1").fadeOut("slow");
+                        document.getElementById("qwes").style.display="none"
+                        $("#applk").fadeIn("slow");
+                        document.getElementById("qwer").style.display="block"
+
+                    }
+                    else if (data.data[1].status!="1") {
+                        $("#applk").fadeOut("slow");
+                        document.getElementById("applk").style.display="none"
+                    }
+                    if(data.data[0].status=="1"){
+                        $("#qwe2").fadeOut("slow");
+                        document.getElementById("qwer2").style.display="block"
+                        document.getElementById("qwer").style.display="block"
+                        document.getElementById("qwes2").style.display="none"
+                        $("#main2").fadeOut("slow");
+                        $("#applk1").fadeIn("slow");
+
+                    }
+                    else if (data.data[0].status!="1"){
+                        $("#applk1").fadeOut("slow");
+                        document.getElementById("applk1").style.display="none"
+                    }
+                    if(data.data[2].status=="1"){
+                        $("#qwe3").fadeOut("slow");
+                        document.getElementById("qwer3").style.display="block"
+                        document.getElementById("qwer").style.display="block"
+                        document.getElementById("qwes3").style.display="none"
+                        $("#main3").fadeOut("slow");
+                        $("#applk2").fadeIn("slow");
+
+                    }
+                    else if (data.data[2].status!="1"){
+                        $("#applk2").fadeOut("slow");
+                        document.getElementById("applk2").style.display="none"
+                    }
+                    if(data.data[3].status=="1"){
+                        $("#qwe4").fadeOut("slow");
+                        document.getElementById("qwer4").style.display="block"
+                        document.getElementById("qwer").style.display="block"
+                        document.getElementById("qwes4").style.display="none"
+                        $("#main4").fadeOut("slow");
+                        $("#applk3").fadeIn("slow");
+
+                    }
+                    else if (data.data[3].status!="1") {
+                        $("#applk3").fadeOut("slow");
+                        document.getElementById("applk3").style.display="none"
+                    }
+                }
+            }
+        }
+
+    });
+    function saomaCustomer(id) {
+        tu(id);
+        var flag=id;
+        if (flag=="main1"){
+            var strSrcData=$("#sing1").text();
+        }
+        if (flag=="main2"){
+            var strSrcData=$("#sing2").text();
+        }
+        if (flag=="main3"){
+            var strSrcData=$("#sing33").text();
+        }
+        if (flag=="main4"){
+            var strSrcData=$("#sing34").text();
+        }
+        var signType=1;
+        $.ajax({
+            type:"post",
+            url:"/login/server",
+            data:{
+                signType:signType,
+                strSrcData:strSrcData
+            },
+            // contentType: 'application/json',
+            dataType:'text',
+            success: function(r) {
+                console.log(r)
+                if (r != null) {
+                    //console.log(r);
+                    var path =  r;
+                    //给img的sec赋值。
+                    if (flag=="main1"){
+                        $("#qrcodes").attr('src', path);
+                    }
+
+                    if (flag=="main2"){
+                        $("#qrcodess").attr('src', path);
+                    }
+                    if (flag=="main3"){
+                        $("#qrcodess3").attr('src', path);
+                    }
+                    if (flag=="main4"){
+                        $("#qrcodess4").attr('src', path);
+                    }
+                }
+            }
+        });
+        // function saomaCustomer(id) {
+        //     var flag=id;
+        //     var appId="01";
+        //    var  tagCode="152000000000000";
+        //     if (flag=="main1"){
+        //         var data=$("#sing1").text();
+        //     }
+        //     if (flag=="main2"){
+        //         var data=$("#sing2").text();
+        //     }
+        //     if (flag=="main3"){
+        //         var data=$("#sing33").text();
+        //     }
+        //     if (flag=="main4"){
+        //         var data=$("#sing34").text();
+        //     }
+        //    var  datas=strToHexCharCode(strToUtf8Bytes(data));
+        //     var temp={
+        //            appId:appId,
+        //             data:datas,
+        //             tagCode:tagCode
+        //     }
+        //     $.ajax({
+        //         type:"post",
+        //         url:"https://192.168.100.210:28006/xq/GetQrCode",
+        //         data:JSON.stringify(temp),
+        //         contentType: 'application/json',
+        //         dataType:'json',
+        //         headers: {
+        //             'Content-Type': 'application/json;charset=UTF-8',
+        //         },
+        //         success: function(r) {
+        //             console.log(r)
+        //             if (r != null) {
+        //                 //console.log(r);
+        //                 var path =  r;
+        //                 //给img的sec赋值。
+        //                 if (flag=="main1"){
+        //                     $("#qrcodes").attr('src',"data:image/png;base64,"+path.qrcode);
+        //                 }
+        //
+        //                 if (flag=="main2"){
+        //                     $("#qrcodess").attr('src',"data:image/png;base64,"+path.qrcode);
+        //                 }
+        //                 if (flag=="main3"){
+        //                     $("#qrcodess3").attr('src',"data:image/png;base64,"+path.qrcode);
+        //                 }
+        //                 if (flag=="main4"){
+        //                     $("#qrcodess4").attr('src',"data:image/png;base64,"+path.qrcode);
+        //                 }
+        //             }
+        //         }
+        //     });
+        //每1秒执行一次myFunction()方法
+        var timesRun = 0;
+        var interval = window.setInterval(myFunction, 1000 *1);
+        var i = 1;
+        function myFunction() {
+            timesRun += 1;
+            if(timesRun ===60){
+                clearInterval(interval);
+            }
+            var signType=1;
+            console.log("轮训任务=================>" + i++);
+            $.ajax({
+                type:"post",
+                url:"/login/authenticationResult",
+                data:{
+                    signType:signType
+                },
+                async : false,
+                dataType:'json',
+                success: function(data) {
+                    if(data.msg=="success"){
+                        clearInterval(interval);
+
+                        // $("#sing").fadeIn("slow");
+
+                        if (flag=="main1"){
+                            $("#qwe").fadeOut("slow");
+                            $("#qwes").fadeOut("slow");
+                            $("#applk").fadeIn("slow");
+                            $("#qrcodes").fadeOut("slow");
+
+                        }
+                        if (flag=="main2"){
+                            $("#qwe2").fadeOut("slow");
+                            $("#qwes2").fadeOut("slow");
+                            $("#applk1").fadeIn("slow");
+                            $("#qrcodess").fadeOut("slow");
+                        }
+                        if (flag=="main3"){
+                            $("#qwe3").fadeOut("slow");
+                            $("#qwes3").fadeOut("slow");
+                            $("#applk2").fadeIn("slow");
+                            $("#qrcodess3").fadeOut("slow");
+                        }
+                        if (flag=="main4"){
+                            $("#qwe4").fadeOut("slow");
+                            $("#qwes4").fadeOut("slow");
+                            $("#applk3").fadeIn("slow");
+                            $("#qrcodess4").fadeOut("slow");
+                        }
+                        if (flag=="main1"){
+                            $("#sing").html(data.certsnResult)
+
+                        }
+
+                        if (flag=="main2"){
+                            console.log(flag)
+                            $("#sings").html(data.certsnResult)
+                        }
+                        if (flag=="main3"){
+                            console.log(flag)
+                            $("#sings3").html(data.certsnResult)
+                        }
+                        if (flag=="main4"){
+                            console.log(flag)
+                            $("#sings4").html(data.certsnResult)
+                        }
+                        // $("#sing").html(data.certsnResult)
+                        // $("#sings").html(data.certsnResult)
+                        // // if(data.data.status=="1"){
+                        //     document.getElementById("qwer").style.display="block"
+                        // // }
+
+                        // document.getElementById("sing").style.visibility="visible"
+
+                        alert("签名成功")
+                    }
+                    if(data.certsnResult!=null){
+                        if (flag=="main1"){
+                            var articleSign=$("#sing").text();
+                            var id=$("#ip").text();
+                        }
+
+                        if (flag=="main2"){
+                            var articleSign=$("#sings").text();
+                            var id=$("#ips").text();
+                        }
+                        if (flag=="main3"){
+                            var articleSign=$("#sings3").text();
+                            var id=$("#ips3").text();
+                        }
+                        if (flag=="main4"){
+                            var articleSign=$("#sings4").text();
+                            var id=$("#ips4").text();
+                        }
+                        // var articleSign=$("#sing").text();
+                        // var id=$("#ip").text();
+                        var temp={
+                            articleSign:articleSign,
+                            id:id
+                        }
+                        $.ajax({
+                            type:"post",
+                            url:"/login/updateArticle",
+                            data:JSON.stringify(temp),
+                            contentType: 'application/json',
+                            async : false,
+                            dataType:'json',
+                            success: function(data) {
+                                if (data!=null){
+                                    $.ajax({
+                                        type:"post",
+                                        url:"/login/getArticle",
+                                        contentType: 'application/json',
+                                        dataType:'json',
+                                        error: function() { alert("查询错误"); },
+                                        success:function(data) {
+                                            if(null != data && "" != data){
+                                                for(i in data.data)
+                                                {
+                                                    if (flag=="main1"){
+                                                        if(data.data[1].status=="1"){
+                                                            document.getElementById("qwer").style.display="block"
+                                                            $("#applk").fadeIn("slow");
+                                                            $("#main1").fadeOut("slow");
+
+                                                            $("#sing5").html(data.data[1].articleSign);
+                                                        }
+                                                    }
+
+                                                    if (flag=="main2"){
+                                                        console.log(data)
+                                                        if(data.data[0].status=="1"){
+                                                            document.getElementById("qwer2").style.display="block"
+                                                            $("#applk1").fadeIn("slow");
+                                                            $("#main2").fadeOut("slow");
+                                                            $("#sing3").html(data.data[0].articleSign);
+                                                        }
+                                                    }
+                                                    if (flag=="main3"){
+                                                        console.log(data)
+                                                        if(data.data[2].status=="1"){
+                                                            document.getElementById("qwer3").style.display="block"
+                                                            $("#applk2").fadeIn("slow");
+                                                            $("#main3").fadeOut("slow");
+                                                            $("#sing18").html(data.data[2].articleSign);
+                                                        }
+                                                    }
+                                                    if (flag=="main4"){
+                                                        console.log(data)
+                                                        if(data.data[3].status=="1"){
+                                                            document.getElementById("qwer4").style.display="block"
+                                                            $("#applk3").fadeIn("slow");
+                                                            $("#main4").fadeOut("slow");
+                                                            $("#sing184").html(data.data[3].articleSign);
+                                                        }
+                                                    }
+                                                    // if(data.data[1].status=="1"){
+                                                    //     document.getElementById("qwer").style.display="block"
+                                                    //     $("#sing5").html(data.data[1].articleSign);
+                                                    // }
+
+
+                                                }
+                                            }
+                                        }
+
+                                    });
+                                }
+
+                            }
+                        });
+                    }
+                }
+
+            });
+
+        }
+
+    }
+
+    function strToUtf8Bytes(str) {
+        const utf8 = [];
+        for (let ii = 0; ii < str.length; ii++) {
+            let charCode = str.charCodeAt(ii);
+            if (charCode < 0x80) utf8.push(charCode);
+            else if (charCode < 0x800) {
+                utf8.push(0xc0 | (charCode >> 6), 0x80 | (charCode & 0x3f));
+            } else if (charCode < 0xd800 || charCode >= 0xe000) {
+                utf8.push(0xe0 | (charCode >> 12), 0x80 | ((charCode >> 6) & 0x3f), 0x80 | (charCode & 0x3f));
+            } else {
+                ii++;
+                charCode = 0x10000 + (((charCode & 0x3ff) << 10) | (str.charCodeAt(ii) & 0x3ff));
+                utf8.push(
+                    0xf0 | (charCode >> 18),
+                    0x80 | ((charCode >> 12) & 0x3f),
+                    0x80 | ((charCode >> 6) & 0x3f),
+                    0x80 | (charCode & 0x3f),
+                );
+            }
+        }
+        //兼容汉字，ASCII码表最大的值为127，大于127的值为特殊字符
+        for(let jj=0;jj<utf8.length;jj++){
+            var code = utf8[jj];
+            if(code>127){
+                utf8[jj] = code - 256;
+            }
+        }
+        return utf8;
+    }
+    function strToHexCharCode(str){
+        var hexCharCode = [];
+        var chars = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"];
+        for(var i = 0; i < str.length; i++) {
+            var bit = (str[i] & 0x0f0) >> 4;
+            hexCharCode.push(chars[bit]);
+            var bit = str[i] & 0x0f;
+            hexCharCode.push(chars[bit]);
+        }
+        return hexCharCode.join("");
+    }
+
+
+
+    // function saomaCustomers() {
+    //     var sing=$("#sing").text();
+    //     console.log(sing)
+    //     var ip=$("#ip").text();
+    //     console.log(ip)
+    // }
+    function deleteCustomer(id) {
+        console.log(id)
+        var flag = id;
+        if (flag == "main1") {
+            var ids = 2;
+        }
+        if (flag == "main2") {
+            var ids = 1;
+        }
+        if (flag == "main3") {
+            var ids = 3;
+        }
+        if (flag == "main4") {
+            var ids = 4;
+        }
+        console.log(ids);
+        var temp = {
+            id: ids
+        }
+        $.ajax({
+            type: "post",
+            url: "/login/deletearticle",
+            data: JSON.stringify(temp),
+            contentType: 'application/json',
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                if (data != null) {
+                    alert("重置签名成功")
+                    window.location.reload();
+
+                }
+            }
+        });
+    }
+</script>
+<script>
+    function tu(id){
+        var flag=id;
+        if (flag=="main1"){
+            timer = window.setInterval(imgBlock, 1000);
+            function imgBlock() {
+                var pop = document.getElementById('pop');
+                pop.style.display = 'block';
+                timer2 = window.setInterval(imgNone,70000);
+            }
+            function imgNone() {
+                var pop = document.getElementById('pop');
+                pop.className = 'down';
+                clearInterval(timer);
+                clearInterval(timer2);
+            }
+        }
+        if (flag=="main2"){
+            timer = window.setInterval(imgBlock, 1000);
+            function imgBlock() {
+                var pop = document.getElementById('pop1');
+                pop.style.display = 'block';
+                timer2 = window.setInterval(imgNone,70000);
+            }
+            function imgNone() {
+                var pop = document.getElementById('pop1');
+                pop.className = 'down';
+                clearInterval(timer);
+                clearInterval(timer2);
+            }
+        }
+        if (flag=="main3") {
+            timer = window.setInterval(imgBlock, 1000);
+
+            function imgBlock() {
+                var pop = document.getElementById('pop2');
+                pop.style.display = 'block';
+                timer2 = window.setInterval(imgNone, 70000);
+            }
+
+            function imgNone() {
+                var pop = document.getElementById('pop2');
+                pop.className = 'down';
+                clearInterval(timer);
+                clearInterval(timer2);
+            }
+        }
+
+        if (flag=="main4"){
+            timer = window.setInterval(imgBlock, 1000);
+            function imgBlock() {
+                var pop = document.getElementById('pop3');
+                pop.style.display = 'block';
+                timer2 = window.setInterval(imgNone,70000);
+            }
+            function imgNone() {
+                var pop = document.getElementById('pop3');
+                pop.className = 'down';
+                clearInterval(timer);
+                clearInterval(timer2);
+            }
+        }
+    }
+
+    // window.onload = function () {
+    //     timer = window.setInterval(imgBlock, 1000);
+    // };
+    // function imgBlock() {
+    //     var pop = document.getElementById('pop');
+    //     pop.style.display = 'block';
+    //     timer2 = window.setInterval(imgNone,70000);
+    // }
+    // function imgNone() {
+    //     var pop = document.getElementById('pop');
+    //     pop.className = 'down';
+    //     clearInterval(timer);
+    //     clearInterval(timer2);
+    // }
+</script>
+</body></html>

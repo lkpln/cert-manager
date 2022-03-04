@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="renderer" content="webkit">
+    <title>登录</title>
+    <link rel="stylesheet" href="css/pintuer.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/pintuer.js"></script>
+    <script src="http://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <style>
+
+        button{
+            width:100px;
+            height: 50px;
+            border-radius: 10px;
+            font-size: 20px;
+            margin: 100px;
+            background-color:#666666 ;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="container">
+    <div class="line bouncein">
+        <div class="xs6 xm4 xs3-move xm4-move">
+            <div style="height:150px;"></div>
+            <div class="media media-y margin-big-bottom">
+            </div>
+            <div class="panel loginbox" id="xitong">
+                <div class="text-center margin-big padding-big-top"></div>
+                <div class="panel-body" style="padding:30px; padding-bottom:10px; padding-top:10px;">
+                    <div class="form-group">
+                        <div class="field field-icon-right">
+                            <input type="text" class="input input-big" name="strSrcData" id="strSrcData"placeholder="文章敏感字段" data-validate="required:请填写文章敏感字段" />
+                        </div>
+                    </div>
+                </div>
+                <div style="padding:30px;"><input type="button" id="main"class="button button-block bg-main text-big input-big"onclick="saomaCustomer()" value="获取签名二维码">
+                </div>
+            </div>
+            <img src="" id="qrcodes" alt="" style="width: 300px"/>
+            <div class="form-group">
+
+                <div class="field field-icon-right">
+                    <textarea  style="width:500px; height:300px"rows="8" id="sing"placeholder="签名结果"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    function saomaCustomer() {
+        var signType=1;
+        var strSrcData=$("#strSrcData").val();
+        $.ajax({
+            type:"post",
+            url:"/server",
+            // data:JSON.stringify(temp),
+            data:{
+                signType:signType,
+                strSrcData:strSrcData
+            },
+            // contentType: 'application/json',
+            dataType:'text',
+            success: function(r) {
+                if (r != null) {
+                    //console.log(r);
+                    var path =  r;
+                    //给img的sec赋值。
+                    $("#qrcodes").attr('src', path);
+                }
+            }
+        });
+    }
+    //每5秒执行一次myFunction()方法
+    window.setInterval(myFunction, 1000 *1,saomaCustomer,1000*60);
+    var i = 1;
+
+    function myFunction() {
+        var signType=1;
+        var app=document.getElementById("sing");
+        console.log("轮训任务=================>" + i++);
+        $.ajax({
+            type:"post",
+            url:"/authenticationResult",
+            data:{
+                signType:signType
+            },
+            async : false,
+            dataType:'json',
+            success: function(data) {
+                if(data.msg=="success"){
+                    $("#sing").fadeIn("slow");
+                    $("#qrcodes").fadeOut("slow");
+                    document.getElementById("sing").style.visibility="visible"
+                    $("#sing").html(data.certsnResult)
+                  alert("获取签名结果成功")
+                }
+
+            }
+        });
+    }
+    $(function() {
+        $("#main").click(function() {
+            $("#qrcodes").fadeIn("slow");
+        });
+
+        $("#main").click(function() {
+            $("#xitong").fadeOut("slow")
+        })
+        document.getElementById("sing").style.visibility="hidden"
+
+    });
+
+</script>
+
+</body>
+</html>
